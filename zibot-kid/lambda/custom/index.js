@@ -88,6 +88,7 @@ const MickeyStoryHandler = {
       const responseBuilder = handlerInput.responseBuilder;
 
       const requestAttributes = attributesManager.getRequestAttributes();
+      const sessionAttributes = attributesManager.getSessionAttributes();
       const storys = randomArrayElement(StoryData.dataByType('long story'));
       sessionAttributes.storys = storys.name;
       const speechOutput = `I have Mickey mouse storys, Do you want to listen about, ${storys.name}?`;
@@ -114,7 +115,7 @@ const YesHandler = {
         const speechOutput = `This story is about ${storysDetails.name
         }, ${storysDetails.description
         } Did you know about this story?
-        <say-as interpret-as="interjection">bon appetit</say-as>`;
+        <say-as interpret-as="interjection">Remember for Quiz!</say-as>`;
 
         return responseBuilder
             .speak(speechOutput)
