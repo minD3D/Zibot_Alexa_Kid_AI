@@ -1,0 +1,12 @@
+# package directories
+jspm_packages
+
+# Serverless directories
+.serverless
+
+./city-guide/models
+./fact-skill/models
+./post-test/models
+./zibot-func/models
+./zibot-kid/models
+./models
