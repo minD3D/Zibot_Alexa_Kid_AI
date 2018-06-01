@@ -15,7 +15,7 @@ module.exports= {
   dataByName: function dataByName(input){
         var list;
         for (let i = 0; i < data.storys.length; i += 1) {
-            if (data.storys[i].name.search(input) > -1) {
+            if (data.storys[i].name==input) {
                 list=data.storys[i];
             }
     }
