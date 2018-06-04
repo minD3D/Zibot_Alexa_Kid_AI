@@ -54,11 +54,10 @@ const LaunchHandler = {
     },
 };
 
-const GetNewFactHandler = {
+const GetZibotFactHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
-    return (request.type === 'IntentRequest'
-        && request.intent.name === 'GetNewFactIntent');
+    return (request.type === 'IntentRequest' && request.intent.name === 'GetZibotFactIntent');
   },
   handle(handlerInput) {
     const randomFact = randomArrayElement(data);
@@ -66,6 +65,7 @@ const GetNewFactHandler = {
 
     return handlerInput.responseBuilder
       .speak(speechOutput)
+      .reprompt(speechOutput)
       .getResponse();
   },
 };
@@ -280,6 +280,59 @@ const QuizAnswerHandler = {
 };
 
 
+const MathHelperHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        const attributesManager = handlerInput.attributesManager;
+        const sessionAttributes = attributesManager.getSessionAttributes();
+        sessionAttributes.num1 = request.intent.slots.Numone.value;
+        sessionAttributes.num2 = request.intent.slots.Numtwo.value;
+        sessionAttributes.calc = request.intent.slots.Calculate.value;
+        return request.type === 'IntentRequest' && request.intent.name === 'MathHelperIntent';
+    },
+    handle(handlerInput) {
+        const attributesManager = handlerInput.attributesManager;
+        const responseBuilder = handlerInput.responseBuilder;
+
+        const sessionAttributes = attributesManager.getSessionAttributes();
+
+        const num1 = sessionAttributes.num1;
+        const num2 = sessionAttributes.num2;
+        const calc = sessionAttributes.calc;
+        const answer = Calculation(num1,num2,calc);
+        const speechOutput = 'Hmm... I found the answer!' + num1 +' '+ calc +' ' + num2 + " equal " + answer;
+
+        return responseBuilder
+              .speak(speechOutput)
+              .reprompt(speechOutput)
+              .getResponse();
+
+    },
+};
+
+function Calculation(num1,num2,calc) {
+  var answer;
+  num1 *= 1;
+  num2 *= 1;
+  if(calc='plus'){
+    answer= num1+num2;
+    return answer;
+  }
+  else if(calc='minus'){
+    answer= num1-num2;
+    return answer;
+  }
+  else if(calc='multiply'){
+    answer= num1*num2;
+    return answer;
+  }
+  else if(calc='devide'){
+    answer= num1/num2;
+    return answer;
+  }
+  else
+    return "I don't know"
+}
 
 //
 // const AboutHandler = {
@@ -421,12 +474,13 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder
     .addRequestHandlers(
         LaunchHandler,
-        GetNewFactHandler,
+        GetZibotFactHandler,
         MickeyStoryHandler,
         DonaldStoryHandler,
         PoohStoryHandler,
         QuizHandler,
         QuizAnswerHandler,
+        MathHelperHandler,
         FallbackHandler,
         YesHandler,
         HelpHandler,
