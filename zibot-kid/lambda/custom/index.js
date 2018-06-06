@@ -31,6 +31,9 @@ const i18n = require('i18next');
 const sprintf = require('i18next-sprintf-postprocessor');
 const https = require('https');
 const StoryData = require('./story_source.js');
+const LanguageData = require('./TempDictionary.js');
+const testsession = require('./jsontest.js');
+
 // 1. Handlers ===================================================================================
 
 
@@ -334,6 +337,50 @@ function Calculation(num1,num2,calc) {
     return "I don't know"
 }
 
+
+
+const TranslateHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        const attributesManager = handlerInput.attributesManager;
+        const sessionAttributes = attributesManager.getSessionAttributes();
+        // const lang=request.intent.slots.Language.value;
+        // sessionAttributes.lang = lang;
+        // if(lang=='Mandarin'||lang=='Chinese'){
+          // if(request.intent.slots.MandarinWord.value!=undefine)
+          sessionAttributes.Mword = request.intent.slots.MandarinWord.value;
+        // }
+        // else if(lang=='Korean'||lang=='Korea'){
+        //     if(request.intent.slots.KoreanWord.value!=undefine)
+        //   sessionAttributes.Kword = request.intent.slots.KoreanWord.value;
+        // }
+        return request.type === 'IntentRequest' && request.intent.name === 'TranslateIntent';
+    },
+    handle(handlerInput) {
+        const attributesManager = handlerInput.attributesManager;
+        const responseBuilder = handlerInput.responseBuilder;
+        const sessionAttributes = attributesManager.getSessionAttributes();
+        // const lang = sessionAttributes.lang;
+        var temp;
+        // if(lang == 'Mandarin'||lang == 'Chinese'){
+          const Mword = sessionAttributes.Mword;
+          temp = LanguageData.dataSearch(Mword,'Mandarin');
+        // }
+        // if(lang == 'Korean'||lang == 'Korea'){
+        //   const Kword = sessionAttributes.Kword;
+        //   temp = LanguageData.dataSearch(Kword,'Korean');
+        // }
+        const result= temp;
+        const speechOutput = 'The word ' + result.English +' is <say-as interpret-as="interjection">'+result.Mandarin+'</say-as>';
+
+        return responseBuilder
+              .speak(speechOutput)
+              .reprompt(speechOutput)
+              .getResponse();
+
+    },
+};
+
 //
 // const AboutHandler = {
 //     canHandle(handlerInput) {
@@ -481,6 +528,7 @@ exports.handler = skillBuilder
         QuizHandler,
         QuizAnswerHandler,
         MathHelperHandler,
+        TranslateHandler,
         FallbackHandler,
         YesHandler,
         HelpHandler,
