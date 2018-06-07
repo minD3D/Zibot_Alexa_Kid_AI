@@ -32,7 +32,6 @@ const sprintf = require('i18next-sprintf-postprocessor');
 const https = require('https');
 const StoryData = require('./story_source.js');
 const LanguageData = require('./TempDictionary.js');
-const testsession = require('./jsontest.js');
 
 // 1. Handlers ===================================================================================
 
@@ -57,159 +56,159 @@ const LaunchHandler = {
     },
 };
 
-const GetZibotFactHandler = {
-  canHandle(handlerInput) {
-    const request = handlerInput.requestEnvelope.request;
-    return (request.type === 'IntentRequest' && request.intent.name === 'GetZibotFactIntent');
-  },
-  handle(handlerInput) {
-    const randomFact = randomArrayElement(data);
-    const speechOutput = GET_FACT_MESSAGE + randomFact;
-
-    return handlerInput.responseBuilder
-      .speak(speechOutput)
-      .reprompt(speechOutput)
-      .getResponse();
-  },
-};
-
-function randomArrayElement(array) {
-    let i = 0;
-    i = Math.floor(Math.random() * array.length);
-    return (array[i]);
-}
-
-
-const MickeyStoryHandler = {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-
-        return request.type === 'IntentRequest' && request.intent.name === 'MickeyStoryIntent';
-    },
-    handle(handlerInput) {
-      const attributesManager = handlerInput.attributesManager;
-      const responseBuilder = handlerInput.responseBuilder;
-
-      const requestAttributes = attributesManager.getRequestAttributes();
-      const sessionAttributes = attributesManager.getSessionAttributes();
-      const storys = randomArrayElement(StoryData.dataByCharacterName('Mickey Mouse'));
-      sessionAttributes.storys = storys.name;
-      sessionAttributes.quizState = 1;
-
-      const speechOutput = `I have ${storys.about} storys, Do you want to listen about, ${storys.name}?`;
-      return responseBuilder
-          .speak(speechOutput)
-          .reprompt(speechOutput)
-          .getResponse();
-    },
-};
-
-
-const DonaldStoryHandler = {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-
-        return request.type === 'IntentRequest' && request.intent.name === 'DonaldStoryIntent';
-    },
-    handle(handlerInput) {
-      const attributesManager = handlerInput.attributesManager;
-      const responseBuilder = handlerInput.responseBuilder;
-
-      const requestAttributes = attributesManager.getRequestAttributes();
-      const sessionAttributes = attributesManager.getSessionAttributes();
-      const storys = randomArrayElement(StoryData.dataByCharacterName('Donald Duck'));
-      sessionAttributes.storys = storys.name;
-      const speechOutput = `I have ${storys.about} storys, Do you want to listen about, ${storys.name}?`;
-      return responseBuilder
-          .speak(speechOutput)
-          .reprompt(speechOutput)
-          .getResponse();
-    },
-};
-
-
-const PoohStoryHandler = {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-
-        return request.type === 'IntentRequest' && request.intent.name === 'PoohStoryIntent';
-    },
-    handle(handlerInput) {
-      const attributesManager = handlerInput.attributesManager;
-      const responseBuilder = handlerInput.responseBuilder;
-
-      const requestAttributes = attributesManager.getRequestAttributes();
-      const sessionAttributes = attributesManager.getSessionAttributes();
-      const storys = randomArrayElement(StoryData.dataByCharacterName('Pooh'));
-      sessionAttributes.storys = storys.name;
-      const speechOutput = `I have ${storys.about} storys, Do you want to listen about, ${storys.name}?`;
-      return responseBuilder
-          .speak(speechOutput)
-          .reprompt(speechOutput)
-          .getResponse();
-    },
-};
-
-const YesHandler = {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-
-        return request.type === 'IntentRequest' && request.intent.name === 'AMAZON.YesIntent';
-    },
-    handle(handlerInput) {
-        const attributesManager = handlerInput.attributesManager;
-        const responseBuilder = handlerInput.responseBuilder;
-
-        const sessionAttributes = attributesManager.getSessionAttributes();
-        const StoryName = sessionAttributes.storys;
-        sessionAttributes.quiz=[];
-        sessionAttributes.quiz.push(StoryName);
-        const storysDetails = StoryData.dataByStoryName(StoryName);
-        const speechOutput = `This story is about ${storysDetails.name
-        }, ${storysDetails.description
-        }. Did you know about this story?
-        <say-as interpret-as="interjection"> There are Quiz!</say-as>`;
-
-        return responseBuilder
-            .speak(speechOutput)
-            .reprompt(speechOutput)
-            .getResponse();
-    },
-};
-
-
-const QuizHandler = {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-
-        return request.type === 'IntentRequest' && request.intent.name === 'QuizIntent';
-    },
-    handle(handlerInput) {
-        const attributesManager = handlerInput.attributesManager;
-        const responseBuilder = handlerInput.responseBuilder;
-
-        const sessionAttributes = attributesManager.getSessionAttributes();
-        const QuizTrigger = sessionAttributes.quizState;
-        if(QuizTrigger==1){
-          const quizList = sessionAttributes.quiz;
-          const question = StoryData.dataByStoryName(randomArrayElement(quizList));
-          sessionAttributes.answer = question.answer;
-          const speechOutput = 'Are you ready for quiz? '+ question.quiz;
-          return responseBuilder
-                .speak(speechOutput)
-                .reprompt(speechOutput)
-                .getResponse();
-        }
-        else{
-          const speechOutput = 'Before start quiz, I need to tell you story. If you want to listen story tell me start story.';
-          return responseBuilder
-                .speak(speechOutput)
-                .reprompt(speechOutput)
-                .getResponse();
-        }
-
-    },
-};
+// const GetZibotFactHandler = {
+//   canHandle(handlerInput) {
+//     const request = handlerInput.requestEnvelope.request;
+//     return (request.type === 'IntentRequest' && request.intent.name === 'GetZibotFactIntent');
+//   },
+//   handle(handlerInput) {
+//     const randomFact = randomArrayElement(data);
+//     const speechOutput = GET_FACT_MESSAGE + randomFact;
+//
+//     return handlerInput.responseBuilder
+//       .speak(speechOutput)
+//       .reprompt(speechOutput)
+//       .getResponse();
+//   },
+// };
+//
+// function randomArrayElement(array) {
+//     let i = 0;
+//     i = Math.floor(Math.random() * array.length);
+//     return (array[i]);
+// }
+//
+//
+// const MickeyStoryHandler = {
+//     canHandle(handlerInput) {
+//         const request = handlerInput.requestEnvelope.request;
+//
+//         return request.type === 'IntentRequest' && request.intent.name === 'MickeyStoryIntent';
+//     },
+//     handle(handlerInput) {
+//       const attributesManager = handlerInput.attributesManager;
+//       const responseBuilder = handlerInput.responseBuilder;
+//
+//       const requestAttributes = attributesManager.getRequestAttributes();
+//       const sessionAttributes = attributesManager.getSessionAttributes();
+//       const storys = randomArrayElement(StoryData.dataByCharacterName('Mickey Mouse'));
+//       sessionAttributes.storys = storys.name;
+//       sessionAttributes.quizState = 1;
+//
+//       const speechOutput = `I have ${storys.about} storys, Do you want to listen about, ${storys.name}?`;
+//       return responseBuilder
+//           .speak(speechOutput)
+//           .reprompt(speechOutput)
+//           .getResponse();
+//     },
+// };
+//
+//
+// const DonaldStoryHandler = {
+//     canHandle(handlerInput) {
+//         const request = handlerInput.requestEnvelope.request;
+//
+//         return request.type === 'IntentRequest' && request.intent.name === 'DonaldStoryIntent';
+//     },
+//     handle(handlerInput) {
+//       const attributesManager = handlerInput.attributesManager;
+//       const responseBuilder = handlerInput.responseBuilder;
+//
+//       const requestAttributes = attributesManager.getRequestAttributes();
+//       const sessionAttributes = attributesManager.getSessionAttributes();
+//       const storys = randomArrayElement(StoryData.dataByCharacterName('Donald Duck'));
+//       sessionAttributes.storys = storys.name;
+//       const speechOutput = `I have ${storys.about} storys, Do you want to listen about, ${storys.name}?`;
+//       return responseBuilder
+//           .speak(speechOutput)
+//           .reprompt(speechOutput)
+//           .getResponse();
+//     },
+// };
+//
+//
+// const PoohStoryHandler = {
+//     canHandle(handlerInput) {
+//         const request = handlerInput.requestEnvelope.request;
+//
+//         return request.type === 'IntentRequest' && request.intent.name === 'PoohStoryIntent';
+//     },
+//     handle(handlerInput) {
+//       const attributesManager = handlerInput.attributesManager;
+//       const responseBuilder = handlerInput.responseBuilder;
+//
+//       const requestAttributes = attributesManager.getRequestAttributes();
+//       const sessionAttributes = attributesManager.getSessionAttributes();
+//       const storys = randomArrayElement(StoryData.dataByCharacterName('Pooh'));
+//       sessionAttributes.storys = storys.name;
+//       const speechOutput = `I have ${storys.about} storys, Do you want to listen about, ${storys.name}?`;
+//       return responseBuilder
+//           .speak(speechOutput)
+//           .reprompt(speechOutput)
+//           .getResponse();
+//     },
+// };
+//
+// const YesHandler = {
+//     canHandle(handlerInput) {
+//         const request = handlerInput.requestEnvelope.request;
+//
+//         return request.type === 'IntentRequest' && request.intent.name === 'AMAZON.YesIntent';
+//     },
+//     handle(handlerInput) {
+//         const attributesManager = handlerInput.attributesManager;
+//         const responseBuilder = handlerInput.responseBuilder;
+//
+//         const sessionAttributes = attributesManager.getSessionAttributes();
+//         const StoryName = sessionAttributes.storys;
+//         sessionAttributes.quiz=[];
+//         sessionAttributes.quiz.push(StoryName);
+//         const storysDetails = StoryData.dataByStoryName(StoryName);
+//         const speechOutput = `This story is about ${storysDetails.name
+//         }, ${storysDetails.description
+//         }. Did you know about this story?
+//         <say-as interpret-as="interjection"> There are Quiz!</say-as>`;
+//
+//         return responseBuilder
+//             .speak(speechOutput)
+//             .reprompt(speechOutput)
+//             .getResponse();
+//     },
+// };
+//
+//
+// const QuizHandler = {
+//     canHandle(handlerInput) {
+//         const request = handlerInput.requestEnvelope.request;
+//
+//         return request.type === 'IntentRequest' && request.intent.name === 'QuizIntent';
+//     },
+//     handle(handlerInput) {
+//         const attributesManager = handlerInput.attributesManager;
+//         const responseBuilder = handlerInput.responseBuilder;
+//
+//         const sessionAttributes = attributesManager.getSessionAttributes();
+//         const QuizTrigger = sessionAttributes.quizState;
+//         if(QuizTrigger==1){
+//           const quizList = sessionAttributes.quiz;
+//           const question = StoryData.dataByStoryName(randomArrayElement(quizList));
+//           sessionAttributes.answer = question.answer;
+//           const speechOutput = 'Are you ready for quiz? '+ question.quiz;
+//           return responseBuilder
+//                 .speak(speechOutput)
+//                 .reprompt(speechOutput)
+//                 .getResponse();
+//         }
+//         else{
+//           const speechOutput = 'Before start quiz, I need to tell you story. If you want to listen story tell me start story.';
+//           return responseBuilder
+//                 .speak(speechOutput)
+//                 .reprompt(speechOutput)
+//                 .getResponse();
+//         }
+//
+//     },
+// };
 
 
 
@@ -251,37 +250,62 @@ const FallbackHandler = {
     },
 };
 
+//
+// const QuizAnswerHandler = {
+//     canHandle(handlerInput) {
+//         const request = handlerInput.requestEnvelope.request;
+//
+//         return request.type === 'IntentRequest' && request.intent.name === 'quizAnswerIntent';
+//     },
+//     handle(handlerInput) {
+//         const attributesManager = handlerInput.attributesManager;
+//         const responseBuilder = handlerInput.responseBuilder;
+//         const sessionAttributes = attributesManager.getSessionAttributes();
+//         const sorryList=['Sorry I will study more','Maybe I can\'t do', 'I will study more for you', 'Sorry Tell me another' ]
+//         const trueList=['Ding dong You are right!','You are ringt! You are so smart!', 'Smart! It\'s true']
+//         const QuizTrigger = sessionAttributes.quizState;
+//         if(QuizTrigger==1){
+//           const speechOutput = randomArrayElement(trueList);
+//           return responseBuilder
+//               .speak(speechOutput)
+//               .reprompt(speechOutput)
+//               .getResponse();
+//           }
+//         else{
+//           const speechOutput = randomArrayElement(sorryList);
+//           return responseBuilder
+//               .speak(speechOutput)
+//               .reprompt(speechOutput)
+//               .getResponse();
+//             }
+//     },
+// };
+//
 
-const QuizAnswerHandler = {
+const TranslateHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-
-        return request.type === 'IntentRequest' && request.intent.name === 'quizAnswerIntent';
+        const attributesManager = handlerInput.attributesManager;
+        const sessionAttributes = attributesManager.getSessionAttributes();
+        sessionAttributes.mword = request.intent.slots.MandarinWord;
+        return request.type === 'IntentRequest' && request.intent.name === 'TranslateIntent';
     },
     handle(handlerInput) {
         const attributesManager = handlerInput.attributesManager;
         const responseBuilder = handlerInput.responseBuilder;
         const sessionAttributes = attributesManager.getSessionAttributes();
-        const sorryList=['Sorry I will study more','Maybe I can\'t do', 'I will study more for you', 'Sorry Tell me another' ]
-        const trueList=['Ding dong You are right!','You are ringt! You are so smart!', 'Smart! It\'s true']
-        const QuizTrigger = sessionAttributes.quizState;
-        if(QuizTrigger==1){
-          const speechOutput = randomArrayElement(trueList);
-          return responseBuilder
+        const mword = sessionAttributes.mword;
+        const answer = LanguageData.dataSearch(mword.value,'Mandarin');
+        const speechOutput = 'The word ' + answer.English +' is  '+ answer.Mandarin +'.';
+         // const speechOutput = 'here';
+
+        return responseBuilder
               .speak(speechOutput)
               .reprompt(speechOutput)
               .getResponse();
-          }
-        else{
-          const speechOutput = randomArrayElement(sorryList);
-          return responseBuilder
-              .speak(speechOutput)
-              .reprompt(speechOutput)
-              .getResponse();
-            }
+
     },
 };
-
 
 const MathHelperHandler = {
     canHandle(handlerInput) {
@@ -303,7 +327,7 @@ const MathHelperHandler = {
         const num2 = sessionAttributes.num2;
         const calc = sessionAttributes.calc;
         const answer = Calculation(num1,num2,calc);
-        const speechOutput = 'Hmm... I found the answer!' + num1 +' '+ calc +' ' + num2 + " equal " + answer;
+        const speechOutput = 'Hmm... I found the answer. ' + num1 +' '+ calc +' ' + num2 + " equal " + answer;
 
         return responseBuilder
               .speak(speechOutput)
@@ -335,51 +359,9 @@ function Calculation(num1,num2,calc) {
   }
   else
     return "I don't know"
-}
-
-
-
-const TranslateHandler = {
-    canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-        const attributesManager = handlerInput.attributesManager;
-        const sessionAttributes = attributesManager.getSessionAttributes();
-        // const lang=request.intent.slots.Language.value;
-        // sessionAttributes.lang = lang;
-        // if(lang=='Mandarin'||lang=='Chinese'){
-          // if(request.intent.slots.MandarinWord.value!=undefine)
-          sessionAttributes.Mword = request.intent.slots.MandarinWord.value;
-        // }
-        // else if(lang=='Korean'||lang=='Korea'){
-        //     if(request.intent.slots.KoreanWord.value!=undefine)
-        //   sessionAttributes.Kword = request.intent.slots.KoreanWord.value;
-        // }
-        return request.type === 'IntentRequest' && request.intent.name === 'TranslateIntent';
-    },
-    handle(handlerInput) {
-        const attributesManager = handlerInput.attributesManager;
-        const responseBuilder = handlerInput.responseBuilder;
-        const sessionAttributes = attributesManager.getSessionAttributes();
-        // const lang = sessionAttributes.lang;
-        var temp;
-        // if(lang == 'Mandarin'||lang == 'Chinese'){
-          const Mword = sessionAttributes.Mword;
-          temp = LanguageData.dataSearch(Mword,'Mandarin');
-        // }
-        // if(lang == 'Korean'||lang == 'Korea'){
-        //   const Kword = sessionAttributes.Kword;
-        //   temp = LanguageData.dataSearch(Kword,'Korean');
-        // }
-        const result= temp;
-        const speechOutput = 'The word ' + result.English +' is <say-as interpret-as="interjection">'+result.Mandarin+'</say-as>';
-
-        return responseBuilder
-              .speak(speechOutput)
-              .reprompt(speechOutput)
-              .getResponse();
-
-    },
 };
+
+
 
 //
 // const AboutHandler = {
@@ -521,16 +503,16 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder
     .addRequestHandlers(
         LaunchHandler,
-        GetZibotFactHandler,
-        MickeyStoryHandler,
-        DonaldStoryHandler,
-        PoohStoryHandler,
-        QuizHandler,
-        QuizAnswerHandler,
-        MathHelperHandler,
+        // GetZibotFactHandler,
+        // MickeyStoryHandler,
+        // DonaldStoryHandler,
+        // PoohStoryHandler,
+        // QuizHandler,
+        // QuizAnswerHandler,
+        // MathHelperHandler,
         TranslateHandler,
-        FallbackHandler,
-        YesHandler,
+        // FallbackHandler,
+        // YesHandler,
         HelpHandler,
         StopHandler,
         SessionEndedHandler
