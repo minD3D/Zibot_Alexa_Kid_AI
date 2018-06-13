@@ -1,0 +1,272 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "wake up",
+            "intents": [{
+                    "name": "AMAZON.CancelIntent",
+                    "slots": [],
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "slots": [],
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "slots": [],
+                    "samples": []
+                },
+                {
+                    "name": "PlayAudio",
+                    "slots": [],
+                    "samples": [
+                        "start",
+                        "begin fairytale",
+                        "begin the fairytale",
+                        "begin playing the fairytale",
+                        "start fairytale",
+                        "start the fairytale",
+                        "start playing the fairytale",
+                        "play the fairytale",
+                        "to play",
+                        "to begin fairytale",
+                        "to begin the fairytale",
+                        "to begin playing the fairytale",
+                        "to start fairytale",
+                        "to start the fairytale",
+                        "to start playing the fairytale",
+                        "to play the fairytale"
+                    ]
+                },
+                {
+                    "name": "AMAZON.PauseIntent",
+                    "slots": [],
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ResumeIntent",
+                    "slots": [],
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PreviousIntent",
+                    "slots": [],
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StartOverIntent",
+                    "slots": [],
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NextIntent",
+                    "slots": [],
+                    "samples": []
+                },
+                {
+                    "name": "GetZibotFactIntent",
+                    "slots": [],
+                    "samples": [
+                        "zibot",
+                        "fact about zibot",
+                        "zibot fact",
+                        "tell me a zibot fact"
+                    ]
+                },
+                {
+                    "name": "MickeyStoryIntent",
+                    "slots": [],
+                    "samples": [
+                        "Mickey mouse story",
+                        "Tell me Mickey mouse",
+                        "Mickey",
+                        "Mickey mouse"
+                    ]
+                },
+                {
+                    "name": "AMAZON.YesIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NoIntent",
+                    "samples": []
+                },
+                {
+                    "name": "StoryIntent",
+                    "slots": [],
+                    "samples": [
+                        "Play story",
+                        "I want to listen story",
+                        "Story",
+                        "Tell me about story"
+                    ]
+                },
+                {
+                    "name": "DonaldStoryIntent",
+                    "slots": [],
+                    "samples": [
+                        "Tell me Donald duck story",
+                        "Donald duck story",
+                        "Donald duck",
+                        "Donald"
+                    ]
+                },
+                {
+                    "name": "PoohStoryIntent",
+                    "slots": [],
+                    "samples": [
+                        "tell me pooh story",
+                        "teddy bear pooh",
+                        "Pooh story",
+                        "Pooh"
+                    ]
+                },
+                {
+                    "name": "QuizIntent",
+                    "slots": [],
+                    "samples": [
+                        "play Quiz game",
+                        "start Quiz",
+                        "give me Quiz",
+                        "Quiz"
+                    ]
+                },
+                {
+                    "name": "quizAnswerIntent",
+                    "slots": [],
+                    "samples": [
+                        "Minne",
+                        "Rabbit",
+                        "Donald duck",
+                        "dog"
+                    ]
+                },
+                {
+                    "name": "MathHelperIntent",
+                    "slots": [
+                        {
+                            "name": "Numone",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "Numtwo",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "Calculate",
+                            "type": "Calculation"
+                        }
+                    ],
+                    "samples": [
+                        "Can you tell me what is {Numone} {Calculate} {Numtwo}",
+                        "{Numone} {Calculate} {Numtwo} equal",
+                        "what is {Numone} {Calculate} {Numtwo}",
+                        "{Numone} {Calculate} {Numtwo}"
+                    ]
+                },
+                {
+                    "name": "TranslateIntent",
+                    "slots": [
+                        {
+                            "name": "word",
+                            "type": "DictionaryWord"
+                        },
+                        {
+                            "name": "Language",
+                            "type": "Language"
+                        }
+                    ],
+                    "samples": [
+                        "tell me the {word} in {Language}",
+                        "Translate {word} to {Language}",
+                        "What is {word} in {Language}",
+                        "Can you translate {word} to {Language}"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "Calculation",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "devide"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "multiply"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "minus"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "plus"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Language",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Mandarin"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Chinese"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "English"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Korea"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Korean"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "DictionaryWord",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "about"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "across"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "act"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "address"
+                            }
+                        }
+                      ]
+            }
+        ]
+    }
+}
+}
